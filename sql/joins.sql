@@ -67,6 +67,27 @@ SELECT * from order_details_cte where order_status in ('CLOSED')
 
 
 
+-- wrong AND condition, to fetch product not sold in 2014-01
+select * from products as p 
+left outer join order_details_view as odv
+on p.product_id = odv.order_item_product_id where odv.order_item_product_id is null
+and to_char(odv.order_date::TIMESTAMP,'yyyy-MM') = '2014-01'
+
+
+-- Correct query as above, 
+-- Porduts not sold in 2014-01
+select * from products as p 
+left outer join order_details_view as odv
+on p.product_id = odv.order_item_product_id 
+and to_char(odv.order_date::TIMESTAMP,'yyyy-MM') = '2014-01'
+where odv.order_item_product_id is null
+
+
+
+
+
+
+
 
 
 
